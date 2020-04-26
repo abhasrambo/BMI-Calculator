@@ -15,8 +15,8 @@ class CalculateViewController: UIViewController {
     @IBOutlet weak var heightSlider: UISlider!
     @IBOutlet weak var weightSlider: UISlider!
     
-    var bmi: Float = 0.0
-    
+    //var bmi: Float = 0.0
+    var calculatorBrain = CalculatorBrain()
     
     
     override func viewDidLoad() {
@@ -37,7 +37,8 @@ class CalculateViewController: UIViewController {
     @IBAction func calculate(_ sender: UIButton) {
         let heightOfUser = heightSlider.value
         let weightOfUser = weightSlider.value
-        bmi = weightOfUser/(heightOfUser * heightOfUser)
+//        bmi = weightOfUser/(heightOfUser * heightOfUser)
+        calculatorBrain.calculateBMI(heightOfUser, weightOfUser)
         self.performSegue(withIdentifier: "goToResult", sender: self)
 //        let scVC = SecondViewController()
 //        scVC.bmiValue = String(format:"%.2f", bmi)
@@ -49,7 +50,7 @@ class CalculateViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToResult" {
             let destinationVC = segue.destination as! ResultsViewController
-            destinationVC.bmiValue = String(format: "%.2f", bmi)
+            destinationVC.bmiValue = calculatorBrain.getBMIValue()
         }
     }
 }
